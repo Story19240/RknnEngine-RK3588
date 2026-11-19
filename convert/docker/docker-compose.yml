@@ -1,0 +1,37 @@
+version: "3.3"
+
+services:
+  converter:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: ${IMAGE_NAME:-rknn-convert:1.5.0-slim}
+    working_dir: /work
+    volumes:
+      - ${WEIGHTS_DIR:-../work}:/input:ro
+      - ${CALIB_DIR:-../work/dataset}:/calib:ro
+      - ${OUTPUT_DIR:-../work/output}:/out
+    command:
+      - convert
+      - --weights
+      - /input/${WEIGHTS_FILE:-best.pt}
+      - --calib
+      - /calib
+      - --out
+      - /out
+      - --platform
+      - ${PLATFORM:-rk3588}
+      - --size
+      - ${INPUT_SIZE:-640}
+      - --num
+      - ${CALIB_NUM:-200}
+      - --quantized
+      - ${QUANTIZED:-INT8}
+      - --head-mode
+      - ${HEAD_MODE:-slim}
+      - --optimization-level
+      - ${OPTIMIZATION_LEVEL:-3}
+      - --opset
+      - ${OPSET:-12}
+      - --seed
+      - ${SEED:-42}

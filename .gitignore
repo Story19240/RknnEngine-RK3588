@@ -1,0 +1,19 @@
+﻿# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Local Docker Compose configuration
+.env
+
+# Local conversion workspace (keep only the guide)
+/convert/work/*
+!/convert/work/README.md
+
+# Generated conversion outputs
+*.onnx
+
+# Android build outputs
+.gradle/
+build/
+local.properties
